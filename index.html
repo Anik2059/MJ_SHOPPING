@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MJ Shopping - Buy! What’s you Need?</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .tagline {
+            position: relative;
+            left: 50%; /* Move to the middle of the container */
+            transform: translateX(-50%); /* Center it */
+            width: fit-content; /* Ensure it only takes the width of the text */
+            margin-left: -50px; /* Adjust to align under 'ping' (approximate offset based on 'MJ Shopping' width) */
+        }
+    </style>
+</head>
+<body class="font-poppins">
+    <!-- Navbar -->
+    <nav class="bg-gradient-to-r from-indigo-800 to-blue-600 text-white p-8 sticky top-0 z-20 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center flex-shrink-0">
+                <img src="images/carousel/Capture.JPG" alt="MJ Shopping Logo" class="h-60 mr-30">
+                <div class="flex flex-col">
+                    <h1 class="text-5xl font-bold">MJ Shopping</h1>
+                    <p class="text-lg mt-1 ml-1" style="padding-left: 0.6rem;">BUY! WHAT'S YOU NEED?</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-8 ml-auto">
+                <a href="#home" class="nav-link text-3xl hover:text-blue-200 transition-colors">Home</a>
+                <a href="#products" class="nav-link text-3xl hover:text-blue-200 transition-colors">Products</a>
+                <a href="#cart" class="nav-link text-3xl hover:text-blue-200 transition-colors">Cart (<span id="cart-count">0</span>)</a>
+                <a href="#about" class="nav-link text-3xl hover:text-blue-200 transition-colors">About</a>
+                <span id="auth-status">
+                    <button id="login-btn" class="bg-blue-500 text-2xl px-5 py-2 rounded-full hover:bg-blue-600 transition-colors">Login</button>
+                    <button id="signup-btn" class="bg-green-500 text-2xl px-5 py-2 rounded-full hover:bg-green-600 transition-colors">Sign Up</button>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white p-8 rounded-xl max-w-md w-full shadow-2xl">
+            <h2 id="auth-title" class="text-2xl font-bold mb-6 text-gray-800">Login</h2>
+            <form id="auth-form">
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2 font-semibold">Email</label>
+                    <input type="email" id="auth-email" class="w-full p-3 border rounded-lg focus:border-blue-500 focus:outline-none" required>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 mb-2 font-semibold">Password</label>
+                    <input type="password" id="auth-password" class="w-full p-3 border rounded-lg focus:border-blue-500 focus:outline-none" required>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors">Submit</button>
+            </form>
+            <button id="close-modal" class="mt-4 text-gray-600 hover:text-gray-800 transition-colors">Close</button>
+        </div>
+    </div>
+
+    <!-- Home Page -->
+    <section id="home">
+        <!-- Hero Section with Carousel -->
+        <div class="relative bg-gradient-to-br from-blue-50 to-purple-100 mt-36">
+            <div id="carousel" class="overflow-hidden">
+                <div id="carousel-items" class="flex transition-transform duration-500">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+            <button id="prev-btn" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white p-4 rounded-full hover:bg-blue-700 transition-colors">❮</button>
+            <button id="next-btn" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white p-4 rounded-full hover:bg-blue-700 transition-colors">❯</button>
+        </div>
+        <!-- New Arrivals -->
+        <div class="bg-gradient-to-br from-green-50 to-teal-50">
+            <div class="container mx-auto py-16">
+                <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">New Arrivals</h2>
+                <div class="relative overflow-x-hidden max-w-6xl mx-auto">
+                    <div id="new-arrivals" class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-2 max-w-full box-border mt-12">
+                        <!-- Populated by JS -->
+                    </div>
+                    <button id="new-arrivals-prev" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white p-4 rounded-full hover:bg-blue-700 transition-colors">❮</button>
+                    <button id="new-arrivals-next" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white p-4 rounded-full hover:bg-blue-700 transition-colors">❯</button>
+                </div>
+            </div>
+        </div>
+        <!-- Discount Offers -->
+        <div class="bg-gradient-to-br from-orange-50 to-yellow-50">
+            <div class="container mx-auto py-12">
+                <h2 class="text-4xl font-bold text-center mb-8 text-gray-800">Discount Offers</h2>
+                <div id="discount-offers" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-4">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+        <!-- All Products -->
+        <div class="bg-gradient-to-br from-purple-50 to-indigo-50">
+            <div class="container mx-auto py-12">
+                <h2 class="text-4xl font-bold text-center mb-8 text-gray-800">All Products</h2>
+                <div id="home-products" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-4">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer class="bg-gradient-to-r from-indigo-800 to-purple-600 text-white py-8">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-6 md:mb-0">
+                        <h3 class="text-2xl font-bold">MJ Shopping</h3>
+                        <p class="mt-2">Buy! What’s you Need?</p>
+                    </div>
+                    <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8">
+                        <div>
+                            <h4 class="text-lg font-semibold">Quick Links</h4>
+                            <ul class="mt-2 space-y-2">
+                                <li><a href="#home" class="nav-link hover:text-blue-200 transition-colors">Home</a></li>
+                                <li><a href="#products" class="nav-link hover:text-blue-200 transition-colors">Products</a></li>
+                                <li><a href="#cart" class="nav-link hover:text-blue-200 transition-colors">Cart</a></li>
+                                <li><a href="#about" class="nav-link hover:text-blue-200 transition-colors">About</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold">Contact Us</h4>
+                            <ul class="mt-2 space-y-2">
+                                <li>Email: <a href="mailto:support@mjshopping.com" class="hover:text-blue-200 transition-colors">support@mjshopping.com</a></li>
+                                <li>Phone: +1-800-MJ-SHOP</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 text-center">
+                    <p>© 2025 MJ Shopping. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+    <!-- Products Page -->
+    <section id="products" class="py-12 bg-gradient-to-br from-green-50 to-teal-100 hidden">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-8 text-gray-800">Shop by Category</h2>
+            <!-- Category Buttons -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button onclick="setCategory('all')" class="category-btn bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition-colors">All</button>
+                <button onclick="setCategory('mens')" class="category-btn bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition-colors">Men's</button>
+                <button onclick="setCategory('womens')" class="category-btn bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition-colors">Women's</button>
+                <button onclick="setCategory('childrens')" class="category-btn bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition-colors">Children's</button>
+                <button onclick="setCategory('gifts')" class="category-btn bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition-colors">Gifts</button>
+                <button onclick="setCategory('accessories')" class="category-btn bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition-colors">Accessories</button>
+            </div>
+            <div class="flex flex-col md:flex-row">
+                <!-- Filters -->
+                <div class="md:w-1/4 p-4">
+                    <h3 class="text-2xl font-semibold mb-6 text-gray-800">Filters</h3>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2 font-semibold">Search</label>
+                        <input type="text" id="search-filter" class="w-full p-3 border rounded-lg focus:border-blue-500 focus:outline-none" placeholder="Search products...">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2 font-semibold">Category</label>
+                        <select id="category-filter" class="w-full p-3 border rounded-lg focus:border-blue-500 focus:outline-none">
+                            <option value="all">All</option>
+                            <option value="mens">Men's</option>
+                            <option value="womens">Women's</option>
+                            <option value="childrens">Children's</option>
+                            <option value="gifts">Gifts</option>
+                            <option value="accessories">Accessories</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Price Range</label>
+                        <input type="range" id="price-filter" min="0" max="2000" value="2000" class="w-full">
+                        <span id="price-value" class="text-gray-700">$2000</span>
+                    </div>
+                </div>
+                <!-- Product Grid -->
+                <div id="product-grid" class="md:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-4">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer class="bg-gradient-to-r from-indigo-800 to-purple-600 text-white py-8">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-6 md:mb-0">
+                        <h3 class="text-2xl font-bold">MJ Shopping</h3>
+                        <p class="mt-2">Buy! What’s you Need?</p>
+                    </div>
+                    <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8">
+                        <div>
+                            <h4 class="text-lg font-semibold">Quick Links</h4>
+                            <ul class="mt-2 space-y-2">
+                                <li><a href="#home" class="nav-link hover:text-blue-200 transition-colors">Home</a></li>
+                                <li><a href="#products" class="nav-link hover:text-blue-200 transition-colors">Products</a></li>
+                                <li><a href="#cart" class="nav-link hover:text-blue-200 transition-colors">Cart</a></li>
+                                <li><a href="#about" class="nav-link hover:text-blue-200 transition-colors">About</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold">Contact Us</h4>
+                            <ul class="mt-2 space-y-2">
+                                <li>Email: <a href="mailto:support@mjshopping.com" class="hover:text-blue-200 transition-colors">support@mjshopping.com</a></li>
+                                <li>Phone: +1-800-MJ-SHOP</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 text-center">
+                    <p>© 2025 MJ Shopping. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+    <!-- Product Details Modal -->
+    <div id="product-details-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white p-8 rounded-xl max-w-xl w-full shadow-2xl">
+            <h2 id="product-title" class="text-3xl font-bold mb-4 text-gray-800"></h2>
+            <img id="product-image" class="mb-4 rounded-lg" alt="Product Image">
+            <p id="product-description" class="text-lg text-gray-700 mb-4"></p>
+            <p id="product-price" class="text-lg text-blue-600 font-bold mb-4"></p>
+            <button onclick="addToCartFromModal()" class="w-full bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors mb-2">Add to Cart</button>
+            <button id="close-product-modal" class="w-full bg-gray-600 text-white px-4 py-3 rounded-lg hover:bg-gray-700 transition-colors">Close</button>
+        </div>
+    </div>
+
+    <!-- Cart Page -->
+    <section id="cart" class="py-12 bg-gradient-to-br from-yellow-50 to-orange-100 hidden">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-8 text-gray-800">Your Cart</h2>
+            <div id="cart-items" class="space-y-4">
+                <!-- Populated by JS -->
+            </div>
+            <div class="mt-8 text-right">
+                <p class="text-2xl font-semibold text-gray-800">Total: $<span id="cart-total">0</span></p>
+                <button id="checkout-btn" class="mt-4 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">Proceed to Checkout</button>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer class="bg-gradient-to-r from-indigo-800 to-purple-600 text-white py-8">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-6 md:mb-0">
+                        <h3 class="text-2xl font-bold">MJ Shopping</h3>
+                        <p class="mt-2">Buy! What’s you Need?</p>
+                    </div>
+                    <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8">
+                        <div>
+                            <h4 class="text-lg font-semibold">Quick Links</h4>
+                            <ul class="mt-2 space-y-2">
+                                <li><a href="#home" class="nav-link hover:text-blue-200 transition-colors">Home</a></li>
+                                <li><a href="#products" class="nav-link hover:text-blue-200 transition-colors">Products</a></li>
+                                <li><a href="#cart" class="nav-link hover:text-blue-200 transition-colors">Cart</a></li>
+                                <li><a href="#about" class="nav-link hover:text-blue-200 transition-colors">About</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold">Contact Us</h4>
+                            <ul class="mt-2 space-y-2">
+                                <li>Email: <a href="mailto:support@mjshopping.com" class="hover:text-blue-200 transition-colors">support@mjshopping.com</a></li>
+                                <li>Phone: +1-800-MJ-SHOP</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 text-center">
+                    <p>© 2025 MJ Shopping. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+    <!-- Checkout Page -->
+    <section id="checkout" class="py-12 bg-gradient-to-br from-pink-50 to-red-100 hidden">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-8 text-gray-800">Checkout</h2>
+            <form id="checkout-form" class="max-w-lg mx-auto bg-white p-8 rounded-xl shadow-2xl">
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2 font-semibold">Full Name</label>
+                    <input type="text" class="w-full p-3 border rounded-lg focus:border-blue-500 focus:outline-none" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2 font-semibold">Delivery Address</label>
+                    <textarea class="w-full p-3 border rounded-lg focus:border-blue-500 focus:outline-none" required></textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2 font-semibold">Payment Method</label>
+                    <select id="payment-method" class="w-full p-3 border rounded-lg focus:border-blue-500 focus:outline-none" required>
+                        <option value="credit">Credit Card</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="cod">Cash on Delivery</option>
+                    </select>
+                </div>
+                <div id="credit-card-details" class="mb-4 hidden">
+                    <label class="block text-gray-700 mb-2 font-semibold">Card Number</label>
+                    <input type="text" class="w-full p-3 border rounded-lg focus:border-blue-500 focus:outline-none" placeholder="1234 5678 9012 3456" pattern="\d{16}" required>
+                    <div class="flex space-x-4 mt-2">
+                        <div>
+                            <label class="block text-gray-700 mb-2 font-semibold">Expiry</label>
+                            <input type="text" class="w-full p-3 border rounded-lg focus:border-blue-500 focus:outline-none" placeholder="MM/YY" pattern="\d{2}/\d{2}" required>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2 font-semibold">CVC</label>
+                            <input type="text" class="w-full p-3 border rounded-lg focus:border-blue-500 focus:outline-none" placeholder="123" pattern="\d{3}" required>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors">Place Order</button>
+            </form>
+        </div>
+        <!-- Footer -->
+        <footer class="bg-gradient-to-r from-indigo-800 to-purple-600 text-white py-8">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-6 md:mb-0">
+                        <h3 class="text-2xl font-bold">MJ Shopping</h3>
+                        <p class="mt-2">Buy! What’s you Need?</p>
+                    </div>
+                    <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8">
+                        <div>
+                            <h4 class="text-lg font-semibold">Quick Links</h4>
+                            <ul class="mt-2 space-y-2">
+                                <li><a href="#home" class="nav-link hover:text-blue-200 transition-colors">Home</a></li>
+                                <li><a href="#products" class="nav-link hover:text-blue-200 transition-colors">Products</a></li>
+                                <li><a href="#cart" class="nav-link hover:text-blue-200 transition-colors">Cart</a></li>
+                                <li><a href="#about" class="nav-link hover:text-blue-200 transition-colors">About</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold">Contact Us</h4>
+                            <ul class="mt-2 space-y-2">
+                                <li>Email: <a href="mailto:support@mjshopping.com" class="hover:text-blue-200 transition-colors">support@mjshopping.com</a></li>
+                                <li>Phone: +1-800-MJ-SHOP</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 text-center">
+                    <p>© 2025 MJ Shopping. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+    <!-- About Page -->
+    <section id="about" class="py-12 bg-gradient-to-br from-purple-50 to-indigo-100 hidden">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-8 text-gray-800">About MJ Shopping</h2>
+            <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-2xl">
+                <img src="images/about/mj_shopping_logo.jpg" alt="MJ Shopping Logo" class="w-32 mx-auto mb-6">
+                <p class="text-lg mb-4 text-gray-700">
+                    Welcome to <strong>MJ Shopping</strong>, your one-stop online shopping platform with the tagline <em>"Buy! What’s you Need?"</em>. 
+                    Founded in 2025, our mission is to provide a seamless and delightful shopping experience, offering a wide range of high-quality products 
+                    across categories like Men's, Women's, Children's, Gifts, and Accessories.
+                </p>
+                <p class="text-lg mb-4 text-gray-700">
+                    At MJ Shopping, we prioritize customer satisfaction with intuitive navigation, secure transactions, and fast delivery. 
+                    Our platform is designed to cater to all your needs, from everyday essentials to unique gifts, all at competitive prices. 
+                    Whether you're shopping for the latest fashion trends or thoughtful presents, we’ve got you covered.
+                </p>
+                <p class="text-lg mb-4 text-gray-700">
+                    <strong>Why Choose MJ Shopping?</strong>
+                    <ul class="list-disc pl-6">
+                        <li>Extensive product catalog with something for everyone.</li>
+                        <li>User-friendly interface with powerful search and filter options.</li>
+                        <li>Secure payment methods including Credit Card, PayPal, and Cash on Delivery.</li>
+                        <li>Exclusive offers and seasonal discounts to save more.</li>
+                        <li>Dedicated customer support available 24/7.</li>
+                    </ul>
+                </p>
+                <!-- Feedback Form -->
+                <h3 class="text-2xl font-semibold mb-6 text-gray-800">Send Us Your Feedback</h3>
+                <form id="feedback-form" class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Name</label>
+                        <input type="text" id="feedback-name" class="w-full p-3 border rounded-lg focus:border-blue-500 focus:outline-none" required>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Email</label>
+                        <input type="email" id="feedback-email" class="w-full p-3 border rounded-lg focus:border-blue-500 focus:outline-none" required>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-semibold">Feedback</label>
+                        <textarea id="feedback-message" class="w-full p-3 border rounded-lg focus:border-blue-500 focus:outline-none" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors">Submit Feedback</button>
+                </form>
+                <p class="text-lg mt-4 text-gray-700">
+                    <strong>Contact Us:</strong> Reach out at <a href="mailto:support@mjshopping.com" class="text-blue-600 hover:underline">support@mjshopping.com</a> 
+                    or call +1-800-MJ-SHOP. Follow us on social media for updates!
+                </p>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer class="bg-gradient-to-r from-indigo-800 to-purple-600 text-white py-8">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-6 md:mb-0">
+                        <h3 class="text-2xl font-bold">MJ Shopping</h3>
+                        <p class="mt-2">Buy! What’s you Need?</p>
+                    </div>
+                    <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8">
+                        <div>
+                            <h4 class="text-lg font-semibold">Quick Links</h4>
+                            <ul class="mt-2 space-y-2">
+                                <li><a href="#home" class="nav-link hover:text-blue-200 transition-colors">Home</a></li>
+                                <li><a href="#products" class="nav-link hover:text-blue-200 transition-colors">Products</a></li>
+                                <li><a href="#cart" class="nav-link hover:text-blue-200 transition-colors">Cart</a></li>
+                                <li><a href="#about" class="nav-link hover:text-blue-200 transition-colors">About</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold">Contact Us</h4>
+                            <ul class="mt-2 space-y-2">
+                                <li>Email: <a href="mailto:support@mjshopping.com" class="hover:text-blue-200 transition-colors">support@mjshopping.com</a></li>
+                                <li>Phone: +1-800-MJ-SHOP</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 text-center">
+                    <p>© 2025 MJ Shopping. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
